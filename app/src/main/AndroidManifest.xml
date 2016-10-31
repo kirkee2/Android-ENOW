@@ -14,7 +14,8 @@
         android:theme="@style/AppTheme.NoActionBar">
         <service android:name="org.eclipse.paho.android.service.MqttService" />
         <activity
-            android:name=".MainActivity">
+            android:name=".MainActivity"
+            android:windowSoftInputMode="adjustResize|stateHidden">
             <category android:name="android.intent.category.BROWSABLE" />
         </activity>
         <activity android:name=".SplashScreenActivity">
@@ -24,7 +25,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SettingActivity"></activity>
+        <activity android:name=".SettingActivity"
+            android:windowSoftInputMode="adjustResize|stateHidden"></activity>
     </application>
 
 </manifest>

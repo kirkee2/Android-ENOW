@@ -34,7 +34,6 @@ public class MqttConnection {
                 @Override
                 public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
                     Toast.makeText(context, "연결 실패.", Toast.LENGTH_LONG).show();
-
                 }
             });
 
@@ -43,9 +42,13 @@ public class MqttConnection {
         }
     }
 
-    public void publish(Context context,JSONObject json){
+    public boolean isConnected(){
+        return client.isConnected();
+    }
+
+    public void publish(Context context,JSONObject json,String _topic){
         if(client.isConnected()) {
-            String topic = "order";
+            String topic = _topic + "/order";
             String mes = json.toString();
             byte[] encodedPayload = new byte[0];
 

@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Handler;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -22,10 +23,12 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import android.widget.Toast;
+
 
 import org.eclipse.paho.android.service.MqttAndroidClient;
 import org.eclipse.paho.client.mqttv3.IMqttActionListener;
@@ -60,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText editPayloadValue;
     private MqttAndroidClient client;
     private MqttConnection mqttConnection;
+
 
 
     private DrawerLayout drawer;
@@ -98,8 +102,8 @@ public class MainActivity extends AppCompatActivity {
         }
         */
 
-
     }
+
 
 
     @Override
@@ -205,6 +209,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 JSONObject json = new JSONObject();
                 JSONObject payload = new JSONObject();
+                String topic = null;
                 try {
                     json.put("roadMapId",editRoadMapId.getText().toString());
                     json.put("corporationName",editCorporationName.getText().toString());
@@ -213,11 +218,13 @@ public class MainActivity extends AppCompatActivity {
                     json.put("deviceId",editDeviceId.getText().toString());
                     payload.put(editPayloadKey.getText().toString(),editPayloadValue.getText().toString());
                     json.put("payload",payload);
+
+                    topic = editCorporationName.getText().toString() + "/" + editServerId.getText().toString() + "/" +editBrokerId.getText().toString() + "/" + editDeviceId.getText().toString();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
 
-                mqttConnection.publish(getApplicationContext(),json);
+                mqttConnection.publish(getApplicationContext(),json,topic);
 
                 /*
                 if(client.isConnected()) {
@@ -250,6 +257,7 @@ public class MainActivity extends AppCompatActivity {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                     JSONObject json = new JSONObject();
                     JSONObject payload = new JSONObject();
+                    String topic = null;
                     try {
                         json.put("roadMapId",editRoadMapId.getText().toString());
                         json.put("corporationName",editCorporationName.getText().toString());
@@ -258,10 +266,13 @@ public class MainActivity extends AppCompatActivity {
                         json.put("deviceId",editDeviceId.getText().toString());
                         payload.put(editPayloadKey.getText().toString(),editPayloadValue.getText().toString());
                         json.put("payload",payload);
+
+                        topic = editCorporationName.getText().toString() + "/" + editServerId.getText().toString() + "/" +editBrokerId.getText().toString() + "/" + editDeviceId.getText().toString();
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    mqttConnection.publish(getApplicationContext(),json);
+
+                    mqttConnection.publish(getApplicationContext(),json,topic);
 
                     /*
                     if(client.isConnected()) {
