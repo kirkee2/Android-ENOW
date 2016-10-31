@@ -105,6 +105,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    protected void onPause(Bundle savedInstanceState){
+        super.onPause();
+
+        mqttConnection.close();
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
